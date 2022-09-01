@@ -6,3 +6,5 @@ bin-intermediate/
 # Files
 *.user
 *.exe
+*.bat
+premake5.lua
