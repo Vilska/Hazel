@@ -1,2 +1,2 @@
 # Hazel
-Hazel Game Engine
+TheCherno's Hazel Game Engine tutorial code-along.
