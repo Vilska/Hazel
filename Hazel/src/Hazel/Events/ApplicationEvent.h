@@ -4,8 +4,8 @@
 
 namespace Hazel {
 
-	class HAZEL_API WindowResizeEvent : public Event
-	{
+	// Event for resizing the window, derives from the base class Event
+	class HAZEL_API WindowResizeEvent : public Event {
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)
 			: m_Width(width), m_Height(height) {}
@@ -13,8 +13,7 @@ namespace Hazel {
 		inline unsigned int GetWidth() const { return m_Width; }
 		inline unsigned int GetHeight() const { return m_Height; }
 
-		std::string ToString() const override
-		{
+		std::string ToString() const override {
 			std::stringstream ss;
 			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
 			return ss.str();
@@ -26,8 +25,8 @@ namespace Hazel {
 		unsigned int m_Width, m_Height;
 	};
 
-	class HAZEL_API WindowCloseEvent : public Event
-	{
+	// Event for closing the window, derives from the base class Event
+	class HAZEL_API WindowCloseEvent : public Event {
 	public:
 		WindowCloseEvent() {}
 
@@ -35,8 +34,8 @@ namespace Hazel {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class HAZEL_API AppTickEvent : public Event
-	{
+	// Event for handling ticks that the app sends, derives from the base class Event
+	class HAZEL_API AppTickEvent : public Event {
 	public:
 		AppTickEvent() {}
 
@@ -44,8 +43,8 @@ namespace Hazel {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class HAZEL_API AppUpdateEvent : public Event
-	{
+	// Event for handling updates that the app sends, derives from the base class Event
+	class HAZEL_API AppUpdateEvent : public Event {
 	public:
 		AppUpdateEvent() {}
 
@@ -53,8 +52,8 @@ namespace Hazel {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class HAZEL_API AppRenderEvent : public Event
-	{
+	// Event for handling render 'requests' that the app sends, derives from the base class Event
+	class HAZEL_API AppRenderEvent : public Event {
 	public:
 		AppRenderEvent() {}
 

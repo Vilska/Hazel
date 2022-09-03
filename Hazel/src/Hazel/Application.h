@@ -6,8 +6,8 @@
 
 namespace Hazel {
 
-	class HAZEL_API Application
-	{
+	// Declaration for Application class
+	class HAZEL_API Application {
 	public:
 		Application();
 		virtual ~Application();
@@ -18,7 +18,7 @@ namespace Hazel {
 		bool m_Running = true;
 	};
 
-	// To be defined in CLIENT
+	// To be defined in Client
 	Application* CreateApplication();
 
 }

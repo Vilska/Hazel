@@ -7,8 +7,8 @@
 
 namespace Hazel {
 
-	struct WindowProps
-	{
+	// 'Default' settings for window
+	struct WindowProps {
 		std::string Title;
 		unsigned int Width;
 		unsigned int Height;
@@ -16,13 +16,11 @@ namespace Hazel {
 		WindowProps(const std::string& title = "Hazel Engine",
 			        unsigned int width = 1280,
 			        unsigned int height = 720)
-			: Title(title), Width(width), Height(height)
-		{
-		}
+			: Title(title), Width(width), Height(height) {}
 	};
 
-	class HAZEL_API Window
-	{
+	// Main window class, declaration for Window class
+	class HAZEL_API Window {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 

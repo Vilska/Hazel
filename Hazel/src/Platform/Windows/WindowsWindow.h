@@ -6,8 +6,8 @@
 
 namespace Hazel {
 
-	class WindowsWindow : public Window
-	{
+	// Windows OS version of Window class, declaration for WindowsWindow class
+	class WindowsWindow : public Window {
 	public:
 		WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
@@ -26,8 +26,7 @@ namespace Hazel {
 	private:
 		GLFWwindow* m_Window;
 
-		struct WindowData
-		{
+		struct WindowData {
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;

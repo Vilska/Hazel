@@ -7,4 +7,3 @@ bin-intermediate/
 *.user
 *.exe
 *.bat
-premake5.lua
