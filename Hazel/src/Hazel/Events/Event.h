@@ -49,7 +49,7 @@ namespace Hazel {
 		bool m_Handled = false;
 	};
 
-	// A class for handling / routing events coming from other classes (eg. window class)
+	// Dispatch specific events (eg. windowclose)
 	class EventDispatcher {
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
