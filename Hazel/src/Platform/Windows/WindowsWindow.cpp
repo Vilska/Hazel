@@ -9,7 +9,6 @@
 
 namespace Hazel {
 	
-	// Define and expand the WindowsWindow class
 
 	static bool s_GLFWInitialized = false;
 
@@ -17,12 +16,12 @@ namespace Hazel {
 		HZ_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	// 1.
+	// Define and expand the WindowsWindow class
+
 	Window* Window::Create(const WindowProps& props) {
 		return new WindowsWindow(props);
 	}
 
-	// 2.
 	WindowsWindow::WindowsWindow(const WindowProps& props) {
 		Init(props);
 	}
@@ -31,7 +30,6 @@ namespace Hazel {
 		Shutdown();
 	}
 
-	// 3.
 	void WindowsWindow::Init(const WindowProps& props) {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
@@ -60,7 +58,7 @@ namespace Hazel {
 
 			data.Width = width;
 			data.Height = height;
-
+			
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 		});
@@ -91,6 +89,13 @@ namespace Hazel {
 					break;
 				}
 			}
+		});
+
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			KeyTypedEvent event(keycode);
+			data.EventCallback(event);
 		});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
