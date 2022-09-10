@@ -2,10 +2,7 @@
 #include "Shader.h"
 
 #include "Renderer.h"
-
 #include "Platform/OpenGL/OpenGLShader.h"
-
-#include "glad/glad.h"
 
 namespace Hazel {
 
@@ -14,7 +11,6 @@ namespace Hazel {
 			case RendererAPI::API::None: HZ_CORE_ASSERT(false, "RendererAPI::None is not supported!");  return nullptr;
 			case RendererAPI::API::OpenGL: return new OpenGLShader(vertexSrc, fragmentSrc);
 		}
-
 		HZ_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}

@@ -6,8 +6,6 @@ public:
 		: Layer("Example") {}
 
 	void OnUpdate() override {
-		if (Hazel::Input::IsKeyPressed(HZ_KEY_TAB))
-			HZ_TRACE("Tab key is pressed (input poll)");
 	}
 
 	void OnEvent(Hazel::Event& event) override {
