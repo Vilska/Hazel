@@ -1,9 +1,11 @@
 #include <Hazel.h>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public Hazel::Layer {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f), m_CameraRotation(0.0f) {
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f), m_CameraRotation(0.0f), m_SquarePosition(0.0f) {
 		m_VertexArray.reset(Hazel::VertexArray::Create());
 
 		float vertices[3 * 7] = {
@@ -34,6 +36,7 @@ public:
 			layout(location = 1) in vec4 a_Color;
 
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
 			
 			out vec3 v_Position;
 			out vec4 v_Color;
@@ -41,7 +44,7 @@ public:
 			void main() {
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -98,12 +101,13 @@ public:
 			layout(location = 0) in vec3 a_Position;
 			
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
 
 			out vec3 v_Position;
 
 			void main() {
 				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -124,7 +128,6 @@ public:
 
 	void OnUpdate(Hazel::Timestep ts) override {
 		float time = ts.GetSeconds();
-		HZ_TRACE("{0}", time);
 
 		if (Hazel::Input::IsKeyPressed(HZ_KEY_LEFT))
 			m_CameraPosition.x -= m_CameraSpeed * time;
@@ -144,8 +147,15 @@ public:
 
 		Hazel::Renderer::BeginScene(m_Camera);
 
-		Hazel::Renderer::Submit(m_SquareShader, m_SquareVertexArray);
-		Hazel::Renderer::Submit(m_Shader, m_VertexArray);
+		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		for (int i = 0; i < 5; i++) {
+			glm::vec3 pos(i * 0.11f, 0.0f, 0.0f);
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+			Hazel::Renderer::Submit(m_SquareShader, m_SquareVertexArray, transform);
+		}
+
+		//Hazel::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Hazel::Renderer::EndScene();
 	}
