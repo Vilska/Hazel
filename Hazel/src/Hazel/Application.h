@@ -9,6 +9,10 @@
 
 #include "Hazel/ImGui/ImGuiLayer.h"
 
+#include "Hazel/Core/Timestep.h"
+
+#include "Hazel/Renderer/Platform.h"
+
 namespace Hazel {
 
 	// Declaration for Application class
@@ -34,6 +38,8 @@ namespace Hazel {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		float m_LastFrameTime = 0.0f;
+		Platform m_Platform;
 	private:
 		static Application* s_Instance;
 	};
