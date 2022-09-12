@@ -3,7 +3,6 @@
 
 #include "imgui.h"
 
-
 #include "Hazel/Application.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
@@ -17,8 +16,6 @@ namespace Hazel {
 
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer") {}
-
-	ImGuiLayer::~ImGuiLayer() {}
 
 	void ImGuiLayer::OnAttach() {
 		IMGUI_CHECKVERSION();

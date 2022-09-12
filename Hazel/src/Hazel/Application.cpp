@@ -59,7 +59,7 @@ namespace Hazel {
 
 			m_ImGuiLayer->Begin();
 				for (Layer* layer : m_LayerStack) {
-					m_ImGuiLayer->OnImGuiRender();
+					layer->OnImGuiRender();
 				}
 			m_ImGuiLayer->End();
 
