@@ -75,17 +75,18 @@ public:
 
 		// VertexBuffer
 
-		float vertices2[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.5f, 0.5f, 0.0f,
-			-0.5f, 0.5f, 0.0f
+		float vertices2[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		m_SquareVertexBuffer.reset(Hazel::VertexBuffer::Create(vertices2, sizeof(vertices2)));
 
 		Hazel::BufferLayout layout2 = {
-			{ Hazel::ShaderDataType::Float3, "a_Position" }
+			{ Hazel::ShaderDataType::Float3, "a_Position" },
+			{ Hazel::ShaderDataType::Float2, "a_TexCoord" }
 		};
 
 		m_SquareVertexBuffer->SetLayout(layout2);
@@ -131,6 +132,49 @@ public:
 		)";
 
 		m_SquareShader.reset(Hazel::Shader::Create(vertexSrc2, fragmentSrc2));
+
+		///////////////////////////////////////////////////
+		/// TEXTURE //////////////////////////////////////
+		/////////////////////////////////////////////////
+
+		std::string TextureVertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+		
+			out vec2 v_TexCoord;
+
+			void main() {
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string TextureFragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+
+			uniform sampler2D u_Texture;
+
+			void main() {
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Hazel::Shader::Create(TextureVertexSrc, TextureFragmentSrc));
+
+		m_Texture = (Hazel::Texture2D::Create("assets/textures/Checkerboard.png"));
+		m_Logo = (Hazel::Texture2D::Create("assets/textures/shrek.png"));
+
+		std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Hazel::Timestep ts) override {
@@ -167,6 +211,11 @@ public:
 			}
 		}
 
+		m_Texture->Bind();
+		Hazel::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		m_Logo->Bind();
+		Hazel::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		//Hazel::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Hazel::Renderer::EndScene();
@@ -182,15 +231,18 @@ public:
 
 	}
 private:
-	std::shared_ptr<Hazel::Shader> m_Shader;
-	std::shared_ptr<Hazel::VertexArray> m_VertexArray;
-	std::shared_ptr<Hazel::VertexBuffer> m_VertexBuffer;
-	std::shared_ptr<Hazel::IndexBuffer> m_IndexBuffer;
+	Hazel::Ref<Hazel::Shader> m_Shader;
+	Hazel::Ref<Hazel::VertexArray> m_VertexArray;
+	Hazel::Ref<Hazel::VertexBuffer> m_VertexBuffer;
+	Hazel::Ref<Hazel::IndexBuffer> m_IndexBuffer;
 
-	std::shared_ptr<Hazel::Shader> m_SquareShader;
-	std::shared_ptr<Hazel::VertexArray> m_SquareVertexArray;
-	std::shared_ptr<Hazel::VertexBuffer> m_SquareVertexBuffer;
-	std::shared_ptr<Hazel::IndexBuffer> m_SquareIndexBuffer;
+	Hazel::Ref<Hazel::Shader> m_SquareShader, m_TextureShader;
+	Hazel::Ref<Hazel::VertexArray> m_SquareVertexArray;
+	Hazel::Ref<Hazel::VertexBuffer> m_SquareVertexBuffer;
+	Hazel::Ref<Hazel::IndexBuffer> m_SquareIndexBuffer;
+
+	Hazel::Ref<Hazel::Texture2D> m_Texture;
+	Hazel::Ref<Hazel::Texture2D> m_Logo;
 
 	Hazel::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
