@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Core.h"
-#include "Core/Timestep.h"
+#include "Core.h"
+#include "Timestep.h"
 #include "Hazel/Events/Event.h"
 
 namespace Hazel {
