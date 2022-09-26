@@ -16,7 +16,7 @@ namespace Hazel {
 		const glm::vec3 Position;
 		const glm::vec2 Size;
 		const Ref<Texture2D> Texture;
-		float Tiling;
+		const float TilingFactor;
 	};
 
 	class Renderer2D {
@@ -29,7 +29,7 @@ namespace Hazel {
 		static void EndScene();
 		
 		static void DrawQuad(const RendererPropsColor& props);
-		//static void DrawQuad(const RendererPropsTexture& props);
+		static void DrawQuad(const RendererPropsTexture& props);
 	};
 
 }
