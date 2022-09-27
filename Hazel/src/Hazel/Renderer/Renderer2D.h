@@ -3,7 +3,6 @@
 #include "OrthographicCamera.h"
 
 #include "Texture.h"
-#include "SubTexture.h"
 
 namespace Hazel {
 
