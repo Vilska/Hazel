@@ -3,6 +3,7 @@
 #include "OrthographicCamera.h"
 
 #include "Texture.h"
+#include "SubTexture.h"
 
 namespace Hazel {
 
@@ -19,6 +20,13 @@ namespace Hazel {
 		const float TilingFactor;
 	};
 
+	struct RendererPropsSubTexture {
+		const glm::vec3 Position;
+		const glm::vec2 Size;
+		const Ref<SubTexture2D> SubTexture;
+		const float TilingFactor;
+	};
+
 	class Renderer2D {
 	public:
 		static void Init();
@@ -30,6 +38,7 @@ namespace Hazel {
 		
 		static void DrawQuad(const RendererPropsColor& props);
 		static void DrawQuad(const RendererPropsTexture& props);
+		static void DrawQuad(const RendererPropsSubTexture& props);
 
 		// Stats
 		struct Statistics {

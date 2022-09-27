@@ -13,6 +13,9 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach() {
 	m_CheckerboardTexture = Hazel::Texture2D::Create("assets/textures/Checkerboard.png");
+	m_SpriteSheet = Hazel::Texture2D::Create("assets/game/textures/rpgpack.png");
+
+	m_TextureStairs = Hazel::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7, 6 }, { 128, 128 });
 }
 
 void Sandbox2D::OnDetach() {
@@ -28,18 +31,20 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts) {
 	Hazel::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 	Hazel::RenderCommand::Clear();
 
+	//Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	//Hazel::Renderer2D::DrawQuad({ { -1.0f, 0.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f } });
+	//Hazel::Renderer2D::DrawQuad({ { 0.5f, -0.5f, 0.0f }, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f} });
+	//Hazel::Renderer2D::DrawQuad({ { -5.0f, -5.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f});
+
+	//for (float y = -5.0f; y < 5.0f; y += 0.5f) {
+	//	for (float x = -5.0f; x < 5.0f; x += 0.5f) {
+	//		glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 1.0f };
+	//		Hazel::Renderer2D::DrawQuad({ { x, y, 1.0f }, { 0.45f, 0.45f }, color });
+	//	}
+	//}
+
 	Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	Hazel::Renderer2D::DrawQuad({ { -1.0f, 0.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f } });
-	Hazel::Renderer2D::DrawQuad({ { 0.5f, -0.5f, 0.0f }, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f} });
-	Hazel::Renderer2D::DrawQuad({ { -5.0f, -5.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f});
-
-	for (float y = -5.0f; y < 5.0f; y += 0.5f) {
-		for (float x = -5.0f; x < 5.0f; x += 0.5f) {
-			glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 1.0f };
-			Hazel::Renderer2D::DrawQuad({ { x, y, 1.0f }, { 0.45f, 0.45f }, color });
-		}
-	}
-
+	Hazel::Renderer2D::DrawQuad({ { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, m_TextureStairs, 1.0f });
 	Hazel::Renderer2D::EndScene();
 }
 
