@@ -84,7 +84,7 @@
     <ClInclude Include="src\Hazel\Core\Log.h">
       <Filter>src\Hazel\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hazel\Core\MouseButtonCodes.h">
+    <ClInclude Include="src\Hazel\Core\MouseCodes.h">
       <Filter>src\Hazel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Hazel\Core\Timestep.h">
@@ -173,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\imgui_impl_opengl3_loader.h">
       <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>

@@ -18,7 +18,7 @@ namespace Hazel {
 	// Declaration for Application class
 	class Application {
 	public:
-		Application();
+		Application(const std::string& name = "Hazel Engine");
 		virtual ~Application();
 
 		void Run();
@@ -32,12 +32,14 @@ namespace Hazel {
 
 		void Close();
 
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; };
+
 		inline static Application& Get() { return *s_Instance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 	private:
-		std::unique_ptr<Window> m_Window;
+		Ref<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		bool m_Minimized = false;
