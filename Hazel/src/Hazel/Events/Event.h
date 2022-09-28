@@ -34,7 +34,7 @@ namespace Hazel {
 	#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
 	// The main class, a declaration / template for later defining
-	class HAZEL_API Event {
+	class Event {
 		//friend class EventDispatcher; // Allow access to this class from the EventDispatcher class (without physically inheriting)
 	public:
 		bool Handled = false;
@@ -44,7 +44,7 @@ namespace Hazel {
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(EventCategory category) {
+		bool IsInCategory(EventCategory category) {
 			return GetCategoryFlags() & category;
 		}
 	};

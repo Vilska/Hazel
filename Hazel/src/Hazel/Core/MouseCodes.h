@@ -1,7 +1,6 @@
 #pragma once
 
-namespace Hazel
-{
+namespace Hazel {
 	typedef enum class MouseCode : uint16_t
 	{
 		// From glfw3.h

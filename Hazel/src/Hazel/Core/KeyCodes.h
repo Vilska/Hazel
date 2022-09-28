@@ -1,9 +1,7 @@
 #pragma once
 
-namespace Hazel
-{
-	typedef enum class KeyCode : uint16_t
-	{
+namespace Hazel {
+	typedef enum class KeyCode : uint16_t {
 		// From glfw3.h
 		Space = 32,
 		Apostrophe = 39, /* ' */
