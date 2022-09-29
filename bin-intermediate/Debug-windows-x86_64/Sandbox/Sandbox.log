@@ -1,6 +1,0 @@
-﻿  Sandbox.cpp
-C:\dev\Hazel\Hazel\src\Hazel\Debug\Instrumentor.h(99,1): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
-  Sandbox2D.cpp
-C:\dev\Hazel\Hazel\src\Hazel\Debug\Instrumentor.h(99,1): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
-  Generating Code...
-  Sandbox.vcxproj -> C:\dev\Hazel\bin\Debug-windows-x86_64\Sandbox\Sandbox.exe

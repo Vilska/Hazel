@@ -147,10 +147,12 @@ namespace Hazel {
 	}
 
 	void WindowsWindow::SetVSync(bool enabled) {
-		if (enabled)
+		if (enabled) {
 			glfwSwapInterval(1);
-		else
+		}
+		else {
 			glfwSwapInterval(0);
+		}
 
 		m_Data.VSync = enabled;
 	}

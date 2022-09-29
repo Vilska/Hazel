@@ -19,9 +19,9 @@ namespace Hazel {
 
 		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) = 0;
 
-		static API GetAPI() { return s_API; }
+		static API GetAPI() { return m_API; }
 	private:
-		static API s_API;
+		static API m_API;
 	};
 
 }

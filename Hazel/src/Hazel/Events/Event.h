@@ -35,8 +35,9 @@ namespace Hazel {
 
 	// The main class, a declaration / template for later defining
 	class Event {
-		//friend class EventDispatcher; // Allow access to this class from the EventDispatcher class (without physically inheriting)
 	public:
+		virtual ~Event() = default;
+
 		bool Handled = false;
 
 		virtual EventType GetEventType() const = 0;
@@ -51,16 +52,15 @@ namespace Hazel {
 
 	// Dispatch specific events (eg. windowclose)
 	class EventDispatcher {
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	public:
 		EventDispatcher(Event& event)
-		: m_Event(event) {}
+			: m_Event(event) {}
 
-		template<typename T>
-		bool Dispatch(EventFn<T> func) {
+		// F will be deduced by the compiler
+		template<typename T, typename F>
+		bool Dispatch(const F& func) {
 			if (m_Event.GetEventType() == T::GetStaticType()) {
-				m_Event.Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(static_cast<T&>(m_Event));
 				return true;
 			}
 			return false;

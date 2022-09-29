@@ -40,7 +40,7 @@ namespace Hazel {
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) {
-		HZ_CORE_ASSERT(vertexBuffer->GetLayout.GetElements().size(), "VertexBuffer has no layout!");
+		HZ_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
 
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
