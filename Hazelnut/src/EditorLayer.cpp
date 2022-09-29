@@ -11,7 +11,7 @@
 namespace Hazel {
 
 	EditorLayer::EditorLayer()
-		: Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f) {}
+		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f) {}
 
 	void EditorLayer::OnAttach() {
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
@@ -19,14 +19,10 @@ namespace Hazel {
 		m_Framebuffer = Framebuffer::Create({ 1280, 720 });
 	}
 
-	void EditorLayer::OnDetach() {
-
-	}
+	void EditorLayer::OnDetach() {}
 
 	void EditorLayer::OnUpdate(Timestep ts) {
 		HZ_PROFILE_FUNCTION();
-	
-		m_CameraController.OnUpdate(ts);
 
 		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
