@@ -18,13 +18,14 @@ namespace Hazel {
 	private:
 		OrthographicCameraController m_CameraController;
 
-		Ref<Hazel::VertexArray> m_SquareVertexArray;
-		Ref<Hazel::Shader> m_SquareShader;
-		Ref<Hazel::Framebuffer> m_Framebuffer;
+		Ref<VertexArray> m_SquareVertexArray;
+		Ref<Shader> m_SquareShader;
+		Ref<Framebuffer> m_Framebuffer;
 
-		Ref<Hazel::Texture2D> m_CheckerboardTexture;
-		Ref<Hazel::Texture2D> m_SpriteSheet;
-		Ref<Hazel::SubTexture2D> m_TextureStairs;
+		Ref<Scene> m_ActiveScene;
+		entt::entity m_SquareEntity;
+
+		Ref<Texture2D> m_CheckerboardTexture;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };

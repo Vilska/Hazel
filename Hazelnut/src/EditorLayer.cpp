@@ -4,10 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <chrono>
-
-#include <chrono>
-
 namespace Hazel {
 
 	EditorLayer::EditorLayer()
@@ -17,6 +13,12 @@ namespace Hazel {
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
 		m_Framebuffer = Framebuffer::Create({ 1280, 720 });
+
+		m_ActiveScene = CreateRef<Scene>();
+
+		m_SquareEntity = m_ActiveScene->CreateEntity();
+		m_ActiveScene->Reg().emplace<TransformComponent>(m_SquareEntity);
+		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(m_SquareEntity, glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 	}
 
 	void EditorLayer::OnDetach() {}
@@ -41,18 +43,11 @@ namespace Hazel {
 		RenderCommand::Clear();
 
 		Renderer2D::BeginScene(m_CameraController.GetCamera());
-		Renderer2D::DrawQuad({ { -1.0f, 0.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f } });
-		Renderer2D::DrawQuad({ { 0.5f, -0.5f, 0.0f }, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f} });
-		Renderer2D::DrawQuad({ { -5.0f, -5.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f});
 
-		for (float y = -5.0f; y < 5.0f; y += 0.5f) {
-			for (float x = -5.0f; x < 5.0f; x += 0.5f) {
-				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 1.0f };
-				Renderer2D::DrawQuad({ { x, y, 1.0f }, { 0.45f, 0.45f }, color });
-			}
-		}
+		m_ActiveScene->OnUpdate(ts);
 
 		Renderer2D::EndScene();
+
 		m_Framebuffer->Unbind();
 	}
 
@@ -113,6 +108,10 @@ namespace Hazel {
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+		auto& color = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(color));
+
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });

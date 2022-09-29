@@ -7,21 +7,18 @@
 namespace Hazel {
 
 	struct RendererPropsColor {
-		const glm::vec3 Position;
-		const glm::vec2 Size;
+		const glm::mat4 Transform;
 		const glm::vec4 Color;
 	};
 
 	struct RendererPropsTexture {
-		const glm::vec3 Position;
-		const glm::vec2 Size;
+		const glm::mat4 Transform;
 		const Ref<Texture2D> Texture;
 		const float TilingFactor;
 	};
 
 	struct RendererPropsSubTexture {
-		const glm::vec3 Position;
-		const glm::vec2 Size;
+		const glm::mat4 Transform;
 		const Ref<SubTexture2D> SubTexture;
 		const float TilingFactor;
 	};
