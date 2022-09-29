@@ -14,11 +14,13 @@ namespace Hazel {
 
 		m_Framebuffer = Framebuffer::Create({ 1280, 720 });
 
+		// ECS stuff
 		m_ActiveScene = CreateRef<Scene>();
 
-		m_SquareEntity = m_ActiveScene->CreateEntity();
-		m_ActiveScene->Reg().emplace<TransformComponent>(m_SquareEntity);
-		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(m_SquareEntity, glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
+		auto square = m_ActiveScene->CreateEntity("Square"); // Square entity
+		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		m_SquareEntity = square;
 	}
 
 	void EditorLayer::OnDetach() {}
@@ -109,8 +111,13 @@ namespace Hazel {
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		auto& color = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+		//if (m_SquareEntity) { // ?
+		ImGui::Separator();
+		ImGui::Text("%s", m_SquareEntity.GetComponent<TagComponent>().Tag.c_str());
+
+		auto& color = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(color));
+		//}
 
 		ImGui::End();
 

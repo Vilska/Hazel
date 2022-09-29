@@ -1,20 +1,20 @@
 #pragma once
 
-#include "entt.hpp"
+#include <entt.hpp>
 
 #include "Hazel/Core/Timestep.h"
 
 namespace Hazel {
 
+	class Entity; // Forward declaration
+
 	class Scene {
+		friend class Entity;
 	public:
 		Scene();
 		~Scene();
 
-		entt::entity CreateEntity();
-
-		//TEMP
-		entt::registry& Reg() { return m_Registry; }
+		Entity CreateEntity(const std::string& name = "");
 
 		void OnUpdate(Timestep ts);
 	private:
