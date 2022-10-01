@@ -10,17 +10,6 @@
 
 namespace Hazel {
 
-	static void DoMath(const glm::mat4& transform) {}
-
-
-	Scene::Scene() {
-
-	}
-
-	Scene::~Scene() {
-
-	}
-
 	Entity Scene::CreateEntity(const std::string& name) {
 		Entity entity = { m_Registry.create(), this };
 		entity.AddComponent<TransformComponent>();
@@ -35,12 +24,12 @@ namespace Hazel {
 		{
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
 				if (!nsc.Instance) {
-					nsc.CreateInstanceFunction();
+					nsc.Instance = nsc.CreateScript();
 					nsc.Instance->m_Entity = Entity{ entity, this };
-					nsc.OnCreateFunction(nsc.Instance);
+					nsc.Instance->OnCreate();
 				}
 
-				nsc.OnUpdateFunction(nsc.Instance, ts);
+				nsc.Instance->OnUpdate(ts);
 			});
 		}
 
