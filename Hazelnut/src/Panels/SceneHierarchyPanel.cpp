@@ -59,7 +59,7 @@ namespace Hazel {
 	}
 
 	void SceneHierarchyPanel::DrawComponents(Entity entity) {
-		if (entity.HasComponent<TransformComponent>()) {
+		if (entity.HasComponent<TagComponent>()) {
 			auto& tag = entity.GetComponent<TagComponent>().Tag;
 
 			char buffer[256];
@@ -76,6 +76,59 @@ namespace Hazel {
 			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform")) {
 				auto& transform = entity.GetComponent<TransformComponent>().Transform;
 				ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.5f);
+
+				ImGui::TreePop();
+			}
+
+		}
+
+		if (entity.HasComponent<CameraComponent>()) {
+
+			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera")) {
+				auto& cameraComponent = entity.GetComponent<CameraComponent>();
+				auto& camera = cameraComponent.Camera;
+
+				const char* projectionTypeStrings[] = { "Perspective", "Orthographic" };
+				const char* currentProjectionTypeString = projectionTypeStrings[camera.GetProjectionType()];
+
+				if (ImGui::BeginCombo("Projection", currentProjectionTypeString)) {
+					for (int i = 0; i < 2; i++) {
+						bool isSelected = currentProjectionTypeString == projectionTypeStrings[i];
+						if (ImGui::Selectable(projectionTypeStrings[i], isSelected)) {
+							currentProjectionTypeString = projectionTypeStrings[i];
+							camera.SetProjectionType(i);
+						}
+
+						if (isSelected) {
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+
+				// Perspective (0)
+				if (cameraComponent.Camera.GetProjectionType() == 0) {
+					ImGui::Text("Sorry, perspective camera is not supported at the moment.");
+				}
+
+				// Orthographic (1)
+				if (cameraComponent.Camera.GetProjectionType() == 1) {
+					float orthoSize = camera.GetOrthographicSize();
+					if (ImGui::DragFloat("Size", &orthoSize)) {
+						camera.SetOrthographicSize(orthoSize);
+					}
+
+					float orthoNear = camera.GetOrthographicNearClip();
+					if (ImGui::DragFloat("Near", &orthoNear)) {
+						camera.SetOrthographicNearClip(orthoNear);
+					}
+
+					float orthoFar = camera.GetOrthographicFarClip();
+					if (ImGui::DragFloat("Far", &orthoFar)) {
+						camera.SetOrthographicFarClip(orthoFar);
+					}
+				}
 
 				ImGui::TreePop();
 			}
