@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Hazel/Scene/SceneSerializer.h"
+
 namespace Hazel {
 
 	EditorLayer::EditorLayer()
@@ -17,46 +19,46 @@ namespace Hazel {
 		// ECS stuff
 		m_ActiveScene = CreateRef<Scene>();
 
-		auto square = m_ActiveScene->CreateEntity("Square"); // Square entity
-		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		//auto square = m_ActiveScene->CreateEntity("Square"); // Square entity
+		//square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
-		m_SquareEntity = square;
+		//m_SquareEntity = square;
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-		m_CameraEntity.AddComponent<CameraComponent>();
+		//m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
+		//m_CameraEntity.AddComponent<CameraComponent>();
 
-		////////////////
+		//////////////////
 
-		class CameraController : public ScriptableEntity {
-		public:
-			void OnCreate() {
+		//class CameraController : public ScriptableEntity {
+		//public:
+		//	void OnCreate() {
 
-			}
+		//	}
 
-			void OnDestroy() {
+		//	void OnDestroy() {
 
-			}
+		//	}
 
-			void OnUpdate(Timestep ts) {
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				float speed = 5.0f;
+		//	void OnUpdate(Timestep ts) {
+		//		auto& translation = GetComponent<TransformComponent>().Translation;
+		//		float speed = 5.0f;
 
-				if (Input::IsKeyPressed(KeyCode::A)) {
-					translation.x -= speed * ts;
-				}
-				if (Input::IsKeyPressed(KeyCode::D)) {
-					translation.x += speed * ts;
-				}
-				if (Input::IsKeyPressed(KeyCode::W)) {
-					translation.y += speed * ts;
-				}
-				if (Input::IsKeyPressed(KeyCode::S)) {
-					translation.y -= speed * ts;
-				}
-			}
-		};
+		//		if (Input::IsKeyPressed(KeyCode::A)) {
+		//			translation.x -= speed * ts;
+		//		}
+		//		if (Input::IsKeyPressed(KeyCode::D)) {
+		//			translation.x += speed * ts;
+		//		}
+		//		if (Input::IsKeyPressed(KeyCode::W)) {
+		//			translation.y += speed * ts;
+		//		}
+		//		if (Input::IsKeyPressed(KeyCode::S)) {
+		//			translation.y -= speed * ts;
+		//		}
+		//	}
+		//};
 
-		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		//m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
@@ -135,6 +137,17 @@ namespace Hazel {
 
 		if (ImGui::BeginMenuBar()) {
 			if (ImGui::BeginMenu("File")) {
+
+				if (ImGui::MenuItem("Serialize")) {
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize("assets/scenes/Example.hazel");
+				}
+
+				if (ImGui::MenuItem("Deserialize")) {
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize("assets/scenes/Example.hazel");
+				}
+
 				if (ImGui::MenuItem("Exit")) {
 					Application::Get().Close();
 				}
