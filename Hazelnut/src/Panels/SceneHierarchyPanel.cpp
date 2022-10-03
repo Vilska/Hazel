@@ -29,12 +29,37 @@ namespace Hazel {
 			m_SelectionContext = {};
 		}
 
+		if (ImGui::BeginPopupContextWindow(0, 1, false)) {
+			if (ImGui::MenuItem("Create empty entity")) {
+				m_Context->CreateEntity("Empty Entity");
+			}
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 
 		ImGui::Begin("Properties");
 
 		if (m_SelectionContext) {
 			DrawComponents(m_SelectionContext);
+
+			if (ImGui::Button("Add component")) {
+				ImGui::OpenPopup("AddComponent");
+			}
+
+			if (ImGui::BeginPopup("AddComponent")) {
+				if (ImGui::MenuItem("Camera")) {
+					m_SelectionContext.AddComponent<CameraComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::MenuItem("Sprite")) {
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
+			}
 		}
 
 		ImGui::End();
@@ -49,6 +74,14 @@ namespace Hazel {
 			m_SelectionContext = entity;
 		}
 
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Delete entity")) {
+				entityDeleted = true;
+			}
+			ImGui::EndPopup();
+		}
+
 		if (opened) {
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
 			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
@@ -56,6 +89,13 @@ namespace Hazel {
 				ImGui::TreePop();
 			}
 			ImGui::TreePop();
+		}
+
+		if (entityDeleted) {
+			m_Context->DestroyEntity(entity);
+			if (m_SelectionContext == entity) {
+				m_SelectionContext = {};
+			}
 		}
 	}
 
@@ -130,13 +170,33 @@ namespace Hazel {
 	template<typename T, typename UIFunction>
 	void DrawComponent(const std::string& label, Entity entity, UIFunction callFunction) {
 		if (entity.HasComponent<T>()) {
+			const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, label.c_str());
 
-			if (ImGui::TreeNodeEx((void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, label.c_str())) {
+			ImGui::SameLine(ImGui::GetWindowWidth() -25.0f);
+			if (ImGui::Button("+", ImVec2{ 20, 20 })) {
+				ImGui::OpenPopup("ComponentSettings");
+			}
+
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("ComponentSettings")) {
+				if (ImGui::MenuItem("Remove component")) {
+					removeComponent = true;
+				}
+
+				ImGui::EndPopup();
+			}
+
+			if (open) {
 				auto& component = entity.GetComponent<T>();
 
 				callFunction(component);
 
 				ImGui::TreePop();
+			}
+
+			if (removeComponent) {
+				entity.RemoveComponent<T>();
 			}
 
 		}
