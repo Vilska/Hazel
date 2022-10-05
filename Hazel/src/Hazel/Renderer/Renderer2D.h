@@ -7,11 +7,14 @@
 #include "Camera.h"
 #include "EditorCamera.h"
 
+#include "Hazel/Scene/Components.h"
+
 namespace Hazel {
 
 	struct RendererPropsColor {
 		const glm::mat4 Transform;
 		const glm::vec4 Color;
+		int EntityID = -1;
 	};
 
 	struct RendererPropsTexture {
@@ -40,6 +43,8 @@ namespace Hazel {
 		static void DrawQuad(const RendererPropsColor& props);
 		static void DrawQuad(const RendererPropsTexture& props);
 		static void DrawQuad(const RendererPropsSubTexture& props);
+
+		static void DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID);
 
 		// Stats
 		struct Statistics {

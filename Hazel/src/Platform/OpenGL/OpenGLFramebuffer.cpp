@@ -64,6 +64,15 @@ namespace Hazel {
 
 			return false;
 		}
+
+		static GLenum HazelFBTextureFormatToGL(FramebufferTextureFormat format) {
+			switch (format) {
+				case FramebufferTextureFormat::RGBA8: return GL_RGBA8;
+				case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+			}
+
+			return 0;
+		}
 	}
 
 
@@ -153,6 +162,9 @@ namespace Hazel {
 	void OpenGLFramebuffer::Bind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 		glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+
+		int value = -1; // m_ColorAttachments should be parameterized
+		glClearTexImage(m_ColorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &value);
 	}
 
 	void OpenGLFramebuffer::Unbind() {
@@ -167,10 +179,20 @@ namespace Hazel {
 	}
 
 	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y) {
-		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(), "Invalid attachment identifier!");
+		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(), "Invalid attachment index!");
+
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
 		int pixelData;
 		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
 		return pixelData;
+	}
+
+	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value) {
+		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(), "Invalid attachment index!");
+
+		auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
+		spec.TextureFormat;
+
+		glClearTexImage(m_ColorAttachments[attachmentIndex], 0, Utils::HazelFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
 	}
 }
