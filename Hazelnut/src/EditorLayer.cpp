@@ -189,6 +189,7 @@ namespace Hazel {
 		}
 
 		m_SceneHierarchyPanel.OnImGuiRender();
+		m_ContentBrowserPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
 
@@ -364,7 +365,6 @@ namespace Hazel {
 
 			SceneSerializer serializer(m_ActiveScene);
 			serializer.Deserialize("assets/scenes/Example.hazel");
-			m_GizmoType = -1;
 		}
 	}
 
