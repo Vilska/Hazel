@@ -287,6 +287,9 @@ namespace Hazel {
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(HZ_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+
+		if (m_GizmoType == -1)
+			dispatcher.Dispatch<MouseButtonPressedEvent>(HZ_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e) {
@@ -316,28 +319,39 @@ namespace Hazel {
 				break;
 			}
 
-			case Key::Q:
-				m_GizmoType = -1;
+			case Key::G: {
+				if (!m_SceneHierarchyPanel.GetSelectionContext()) return false;
+				bool isSelected = m_GizmoType == ImGuizmo::OPERATION::TRANSLATE;
+				isSelected ? m_GizmoType = -1 : m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
 				break;
+			}
 
-			case Key::G:
-				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			case Key::R: {
+				if (!m_SceneHierarchyPanel.GetSelectionContext()) return false;
+				bool isSelected = m_GizmoType == ImGuizmo::OPERATION::ROTATE;
+				isSelected ? m_GizmoType = -1 : m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 				break;
+			}
 
-			case Key::R:
-				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			case Key::T: {
+				if (!m_SceneHierarchyPanel.GetSelectionContext()) return false;
+				bool isSelected = m_GizmoType == ImGuizmo::OPERATION::SCALE;
+				isSelected ? m_GizmoType = -1 : m_GizmoType = ImGuizmo::OPERATION::SCALE;
 				break;
-
-			case Key::T:
-				m_GizmoType = ImGuizmo::OPERATION::SCALE;
-				break;
+			}
 		}
+	}
+
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
+		if (e.GetMouseButton() != Mouse::ButtonLeft) return false;
+		m_HoveredEntity ? m_SceneHierarchyPanel.SetSelectionContext(m_HoveredEntity) : m_SceneHierarchyPanel.SetSelectionContext({});
 	}
 
 	void EditorLayer::NewScene() {
 		m_ActiveScene = CreateRef<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		m_GizmoType = -1;
 	}
 
 	void EditorLayer::OpenScene() {
@@ -346,9 +360,11 @@ namespace Hazel {
 			m_ActiveScene = CreateRef<Scene>();
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+			m_GizmoType = -1;
 
 			SceneSerializer serializer(m_ActiveScene);
 			serializer.Deserialize("assets/scenes/Example.hazel");
+			m_GizmoType = -1;
 		}
 	}
 
