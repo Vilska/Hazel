@@ -66,6 +66,13 @@ namespace Hazel {
 
 		//m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
+		auto commandLineArgs = Application::Get().GetCommandLineArgs();
+		if (commandLineArgs.Count > 1) {
+			auto sceneFilePath = commandLineArgs[1];
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(sceneFilePath);
+		}
+
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -364,7 +371,7 @@ namespace Hazel {
 			m_GizmoType = -1;
 
 			SceneSerializer serializer(m_ActiveScene);
-			serializer.Deserialize("assets/scenes/Example.hazel");
+			serializer.Deserialize(filepath);
 		}
 	}
 

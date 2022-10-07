@@ -12,7 +12,8 @@ namespace Hazel {
 	Application* Application::s_Instance = nullptr;
 
 	// Main class, engines heart, declared in header file
-	Application::Application(const std::string& name) {
+	Application::Application(const std::string& name, ApplicationCommandLineArgs args)
+		: m_CommandLineArgs(args) {
 		HZ_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 

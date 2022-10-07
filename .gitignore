@@ -1,9 +1,8 @@
-# Binaries
 **/bin/
-!vendor/bin/premake/
-bin-intermediate/
+!vendor/premake/bin/
+bin-int/
 
-#Hazel files
+# Hazel files
 *.log
 *.json
 
@@ -13,5 +12,8 @@ bin-intermediate/
 **.vcxproj
 **.vcxproj.filters
 **.vcxproj.user
-*.exe
-*.bat
+
+# Directories
+Hazel/vendor/VulkanSDK
+Hazelnut/assets/cache
+scripts/__pycache__
