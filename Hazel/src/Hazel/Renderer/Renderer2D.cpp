@@ -115,8 +115,8 @@ namespace Hazel {
 	}
 
 	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform) {
-		//s_Data.CameraBuffer.ViewProjection = camera.GetViewProjection(); // TODO
-		//s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));
+		s_Data.CameraBuffer.ViewProjection = camera.GetProjection() * glm::inverse(transform);
+		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DProps::CameraData));
 
 		s_Data.QuadIndexCount = 0;
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
