@@ -231,6 +231,7 @@ namespace Hazel {
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = props.TilingFactor;
+			s_Data.QuadVertexBufferPtr->EntityID = props.EntityID;
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -284,7 +285,13 @@ namespace Hazel {
 	}
 
 	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID) {
-		DrawQuad({ transform, src.Color, entityID });
+
+		if (src.Texture) {
+			DrawQuad({ transform, src.Texture, src.TilingFactor, entityID });
+		}
+		else {
+			DrawQuad({ transform, src.Color, entityID });
+		}
 	}
 
 	void Renderer2D::ResetStats() {

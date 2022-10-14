@@ -21,6 +21,7 @@ namespace Hazel {
 		const glm::mat4 Transform;
 		const Ref<Texture2D> Texture;
 		const float TilingFactor;
+		int EntityID = -1;
 	};
 
 	struct RendererPropsSubTexture {
