@@ -343,9 +343,7 @@ namespace Hazel {
 	void EditorLayer::OnEvent(Event& e) {
 		m_CameraController.OnEvent(e);
 
-		if (m_SceneState == SceneState::Edit) {
-			m_EditorCamera.OnEvent(e);
-		}
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(HZ_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
