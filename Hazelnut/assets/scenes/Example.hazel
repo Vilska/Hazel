@@ -2,6 +2,25 @@ Scene: Untitled
 Entities:
   - Entity: 12837192831273
     TagComponent:
+      Tag: Square1
+    TransformComponent:
+      Translation: [-3.39383411, -0.540867567, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.525564194, 2.39632154, 1]
+    SpriteRendererComponent:
+      Color: [0.411764711, 0.843137264, 0.517647088, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.790000021
+      Restitution: 0.189999998
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
       Tag: Camera
     TransformComponent:
       Translation: [0, 0, 0]
@@ -17,15 +36,110 @@ Entities:
       Fixed: false
   - Entity: 12837192831273
     TagComponent:
-      Tag: Square
+      Tag: Square2
     TransformComponent:
-      Translation: [0, -5.41141653, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Translation: [-2.8692348, -0.470710039, 0]
+      Rotation: [0, 0, 0.466570377]
+      Scale: [0.549691558, 2.24181604, 1]
     SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
+      Color: [0.411764711, 0.843137264, 0.517647088, 1]
     Rigidbody2DComponent:
       BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.74000001
+      Restitution: 0.379999995
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Square3
+    TransformComponent:
+      Translation: [-1.98062873, -0.491630137, 0]
+      Rotation: [0, 0, -0.484564692]
+      Scale: [0.45444262, 2.53971505, 1]
+    SpriteRendererComponent:
+      Color: [0.411764711, 0.843137264, 0.517647088, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.810000002
+      Restitution: 0.340000004
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Square4
+    TransformComponent:
+      Translation: [-1.07307804, -0.54537797, 0]
+      Rotation: [0, 0, 0.323738188]
+      Scale: [0.437709361, 2.19182682, 1]
+    SpriteRendererComponent:
+      Color: [0.411764711, 0.843137264, 0.517647088, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.899999976
+      Restitution: 0.319999993
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Square5
+    TransformComponent:
+      Translation: [1.1027298, -0.502091706, 0]
+      Rotation: [0, 0, 0]
+      Scale: [2.35399985, 2.25665545, 2.35399985]
+    SpriteRendererComponent:
+      Color: [0.411764711, 0.843137264, 0.517647088, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.930000007
+      Restitution: 0.209999993
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Square6
+    TransformComponent:
+      Translation: [3.30818439, -0.523011088, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.627706647, 2.27868223, 1]
+    SpriteRendererComponent:
+      Color: [0.412724912, 0.841698825, 0.51872611, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.75999999
+      Restitution: 0.230000004
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [-0.524598837, -4.68617868, 0]
+      Rotation: [0, 0, 0.127448738]
+      Scale: [13.7955618, 1.00000012, 1]
+    SpriteRendererComponent:
+      Color: [0.830115795, 0.46473664, 0.46473664, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
       FixedRotation: false
     BoxCollider2DComponent:
       Offset: [0, 0]
